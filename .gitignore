@@ -1,0 +1,77 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretórios de logs
+logs
+*.log
+logs/*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diretórios de dependências
+node_modules/
+
+# Diretórios de produção
+dist/
+build/
+
+# Diretórios temporários
+tmp/
+temp/
+
+# Diretórios de testes
+coverage/
+*.lcov
+
+# Configurações do sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs e editores de texto
+.vscode/
+.idea/
+
+# Configurações do ambiente
+.env
+.env.test
+.env.production
+.env.local
+
+# Arquivos de pacotes de instalação
+*.tgz
+
+# Outros arquivos desnecessários
+.nyc_output/
+.sass-cache/
+connect.lock
+coverage/
+bower_components/
+.jshintignore
+.npmrc
+.eslintcache
+.parcel-cache/
+.next/
+.nuxt/
+.cache/
+.output/
+
+# Arquivos de configuração de CI/CD
+.ci/
+.circleci/
+.github/
+.gitlab/
+
+# Arquivos gerados durante builds
+*.log
+*.log.*
+*.pid
+*.seed
+
+# Arquivos de lock
+package-lock.json
+yarn.lock
