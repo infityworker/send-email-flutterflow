@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 
 const app = express();
-const PORT = "ensinamentofocoemsec.com.br";
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -70,6 +70,6 @@ app.post("/send-email", async (req, res) => {
   res.send(result);
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
