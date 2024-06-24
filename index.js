@@ -57,6 +57,6 @@ app.post("/send-email", async (req, res) => {
   res.send(result);
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Servidor rodando em http://localhost:${PORT}`);
+// });
