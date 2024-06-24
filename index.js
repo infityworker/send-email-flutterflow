@@ -1,6 +1,5 @@
 const express = require("express");
 const axios = require("axios");
-const FormData = require("form-data");
 
 const app = express();
 const PORT = "ensinamentofocoemsec.com.br";
@@ -11,25 +10,27 @@ app.use(express.json());
 async function sendEmail(to, subject, text, from, authorization) {
   try {
     console.log("Enviando e-mail para:", to);
-    
-    const formData = new FormData();
-    formData.append('from', from);
-    formData.append('to', to);
-    formData.append('subject', subject);
-    formData.append('text', text);
 
     const response = await axios.post(
       "https://api.resend.com/emails",
-      formData,
+      {
+        from,
+        to,
+        subject,
+        text,
+      },
       {
         headers: {
-          ...formData.getHeaders(),
           Authorization: authorization,
         },
       }
     );
 
-    console.log("Resposta da API de envio de e-mail:", response.status, response.data);
+    console.log(
+      "Resposta da API de envio de e-mail:",
+      response.status,
+      response.data
+    );
 
     if (response.status === 200) {
       console.log("E-mail enviado com sucesso!");
@@ -47,15 +48,22 @@ async function sendEmail(to, subject, text, from, authorization) {
       "Erro ao enviar e-mail:",
       error.response ? error.response.data : error.message
     );
-    return `Erro ao enviar e-mail: ${error.response ? error.response.data : error.message}`;
+    return `Erro ao enviar e-mail: ${
+      error.response ? error.response.data : error.message
+    }`;
   }
 }
 // Endpoint para enviar e-mail
 app.post("/send-email", async (req, res) => {
-  const { to, subject, text, from, authorization } = req.header;
+  const { to, subject, text, from } = req.body;
+  const { authorization } = req.headers;
 
   if (!to || !subject || !text || !from || !authorization) {
-    return res.status(400).send("Por favor, forneça 'to', 'subject', 'text', 'from' e 'authorization'.");
+    return res
+      .status(400)
+      .send(
+        "Por favor, forneça 'to', 'subject', 'text', 'from' e 'authorization'."
+      );
   }
 
   const result = await sendEmail(to, subject, text, from, authorization);
