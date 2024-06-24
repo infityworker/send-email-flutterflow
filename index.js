@@ -47,13 +47,13 @@ async function sendEmail(to, subject, text, from, authorization ) {
 
 // Endpoint para enviar e-mail
 app.post("/send-email", async (req, res) => {
-  const { to, subject, text } = req.body;
+  const { to, subject, text, from, authorization } = req.body;
 
   if (!to || !subject || !text || !from || !authorization) {
     return res.status(400).send("Por favor, forneça 'to', 'subject', 'text', 'from' e 'authorization'.");
   }
 
-  const result = await sendEmail(to, subject, text);
+  const result = await sendEmail(to, subject, text, from, authorization);
   res.send(result);
 });
 
