@@ -3,6 +3,15 @@ const axios = require("axios");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "https://ensinamentofocoemsec.com.br",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 
@@ -70,6 +79,6 @@ app.post("/send-email", async (req, res) => {
   res.send(result);
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
