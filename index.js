@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const FormData = require("form-data");
 
 const app = express();
 const PORT = "ensinamentofocoemsec.com.br";
@@ -7,23 +8,28 @@ const PORT = "ensinamentofocoemsec.com.br";
 app.use(express.json());
 
 // Função para enviar e-mail
-async function sendEmail(to, subject, text, from, authorization ) {
+async function sendEmail(to, subject, text, from, authorization) {
   try {
+    console.log("Enviando e-mail para:", to);
+    
+    const formData = new FormData();
+    formData.append('from', from);
+    formData.append('to', to);
+    formData.append('subject', subject);
+    formData.append('text', text);
+
     const response = await axios.post(
       "https://api.resend.com/emails",
-      {
-        from: from, // Adicione o endereço de e-mail do remetente
-        to: to,
-        subject: subject,
-        text: text,
-      },
+      formData,
       {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: authorization, // Substitua 'YOUR_API_KEY' pelo seu token da API do Resend
+          ...formData.getHeaders(),
+          Authorization: authorization,
         },
       }
     );
+
+    console.log("Resposta da API de envio de e-mail:", response.status, response.data);
 
     if (response.status === 200) {
       console.log("E-mail enviado com sucesso!");
@@ -44,7 +50,6 @@ async function sendEmail(to, subject, text, from, authorization ) {
     return `Erro ao enviar e-mail: ${error.response ? error.response.data : error.message}`;
   }
 }
-
 // Endpoint para enviar e-mail
 app.post("/send-email", async (req, res) => {
   const { to, subject, text, from, authorization } = req.body;
