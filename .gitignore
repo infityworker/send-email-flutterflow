@@ -37,7 +37,6 @@ Thumbs.db
 .idea/
 
 # Configurações do ambiente
-.env
 .env.test
 .env.production
 .env.local
